@@ -1,0 +1,119 @@
+# === PYTHON / DJANGO ===
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+*.pdb
+*.egg
+*.egg-info/
+*.log
+*.pot
+*.mo
+*.sqlite3
+*.db
+db.sqlite3
+.DS_Store
+
+# Django specific
+/static/
+media/
+.env
+.env.*
+*.env
+local_settings.py
+settings_local.py
+.vscode/
+.idea/
+.mypy_cache/
+coverage/
+htmlcov/
+*.pot
+celerybeat-schedule
+instance/
+*.pid
+
+# Virtual environment
+venv/
+env/
+ENV/
+.venv/
+.pytest_cache/
+__pypackages__/
+Pipfile.lock
+poetry.lock
+
+# === NODE / REACT ===
+# Node modules and build files
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+package-lock.json
+yarn.lock
+.pnpm-store/
+
+# Production build
+build/
+dist/
+.cache/
+.temp/
+.tmp/
+.next/
+out/
+
+# Environment files
+.env.development
+.env.production
+.env.local
+.env.test
+
+# React testing
+coverage/
+jest/
+cypress/videos/
+cypress/screenshots/
+
+# === OS / MISC ===
+.DS_Store
+Thumbs.db
+ehthumbs.db
+*.swp
+*.swo
+*.bak
+*.tmp
+*.orig
+*.log
+*.lock
+
+# === IDEs / EDITORS ===
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# === GIT / DEPLOY ===
+# Logs and system files
+*.log
+*.pid
+*.seed
+*.csv
+*.tsv
+
+# Deployment / compiled artifacts
+*.tar.gz
+*.zip
+*.egg
+*.whl
+
+# === FRONTEND + BACKEND COMBINED ===
+# If React frontend is inside Django project (e.g., /frontend/)
+frontend/node_modules/
+frontend/build/
+frontend/.env
+
+# If you’re using a common static folder
+staticfiles/
+static/
+media/
