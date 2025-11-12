@@ -1,0 +1,95 @@
+[
+  {
+    "sign_order": "S12345",
+    "sign_type": "No Parking",
+    "sign_description": "No Parking Mon–Fri 8AM–6PM",
+    "latitude": 40.7128,
+    "longitude": -74.006,
+    "borough": "Manhattan",
+    "location_description": "Broadway & W 23rd St"
+  },
+  {
+    "sign_order": "P67890",
+    "sign_type": "Metered Parking",
+    "sign_description": "2 Hour Metered Parking 8AM–7PM Except Sunday",
+    "latitude": 40.715,
+    "longitude": -74.002,
+    "borough": "Manhattan",
+    "location_description": "5th Ave & E 25th St"
+  },
+  {
+    "sign_order": "N24680",
+    "sign_type": "No Standing",
+    "sign_description": "No Standing Anytime",
+    "latitude": 40.718,
+    "longitude": -74.01,
+    "borough": "Manhattan",
+    "location_description": "6th Ave & W 28th St"
+  },
+  {
+    "sign_order": "M13579",
+    "sign_type": "Loading Zone",
+    "sign_description": "Loading Zone 7AM–5PM",
+    "latitude": 40.720,
+    "longitude": -74.008,
+    "borough": "Manhattan",
+    "location_description": "7th Ave & W 30th St"
+  },
+  {
+    "sign_order": "R11223",
+    "sign_type": "No Parking",
+    "sign_description": "No Parking Sat–Sun 10AM–4PM",
+    "latitude": 40.722,
+    "longitude": -74.005,
+    "borough": "Manhattan",
+    "location_description": "8th Ave & W 32nd St"
+  },
+  {
+    "sign_order": "L33445",
+    "sign_type": "No Standing",
+    "sign_description": "No Standing Mon–Fri 9AM–5PM",
+    "latitude": 40.719,
+    "longitude": -73.998,
+    "borough": "Manhattan",
+    "location_description": "Madison Ave & E 26th St"
+  },
+  {
+    "sign_order": "T55667",
+    "sign_type": "Metered Parking",
+    "sign_description": "1 Hour Metered Parking 8AM–6PM",
+    "latitude": 40.716,
+    "longitude": -74.01,
+    "borough": "Manhattan",
+    "location_description": "Park Ave & E 29th St"
+  },
+  {
+    "sign_order": "U77889",
+    "sign_type": "Loading Zone",
+    "sign_description": "Loading Zone 6AM–3PM",
+    "latitude": 40.713,
+    "longitude": -74.004,
+    "borough": "Manhattan",
+    "location_description": "Lexington Ave & E 27th St"
+  },
+  {
+    "sign_order": "V99001",
+    "sign_type": "No Parking",
+    "sign_description": "No Parking Mon–Fri 7AM–10AM",
+    "latitude": 40.711,
+    "longitude": -74.003,
+    "borough": "Manhattan",
+    "location_description": "2nd Ave & E 24th St"
+  },
+  {
+    "sign_order": "W22334",
+    "sign_type": "Other",
+    "sign_description": "Free Parking Anytime",
+    "latitude": 40.714,
+    "longitude": -74.007,
+    "borough": "Manhattan",
+    "location_description": "3rd Ave & E 25th St"
+  }
+]
+
+  
+  
