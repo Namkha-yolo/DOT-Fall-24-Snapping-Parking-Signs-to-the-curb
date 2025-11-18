@@ -1,0 +1,50 @@
+/* Legend Section */
+.legend-section {
+  padding: 1.5rem;
+}
+
+.legend-section h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #374151;
+}
+
+.legend-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+
+/* Dot Indicators */
+.dot {
+  height: 14px;
+  width: 14px;
+  border-radius: 50%;
+  display: inline-block;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.red {
+  background-color: #ef4444;
+}
+
+.blue {
+  background-color: #3b82f6;
+}
+
+.yellow {
+  background-color: #fbbf24;
+}
+
+.green {
+  background-color: #10b981;
+}
