@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback, useRef } from "react";
 import { GoogleMap, Marker, InfoWindow } from "@react-google-maps/api";
 import "./Map.css";
 
@@ -26,15 +26,46 @@ const mapOptions = {
   zoomControl: true,
 };
 
-function Map({ signs }) {
+function Map({ signs, onBoundsChange }) {
   const [selectedSign, setSelectedSign] = useState(null);
+  const mapRef = useRef(null);
 
-  const getMarkerIcon = (type) => {
-    if (type.includes("No Parking")) return "http://maps.google.com/mapfiles/ms/icons/red-dot.png";
-    if (type.includes("Metered")) return "http://maps.google.com/mapfiles/ms/icons/blue-dot.png";
-    if (type.includes("Loading")) return "http://maps.google.com/mapfiles/ms/icons/yellow-dot.png";
+  // Get marker color based on sign description
+  const getMarkerIcon = (description = "") => {
+    const desc = description.toLowerCase();
+    if (desc.includes("no parking") || desc.includes("no standing")) {
+      return "http://maps.google.com/mapfiles/ms/icons/red-dot.png";
+    }
+    if (desc.includes("metered")) {
+      return "http://maps.google.com/mapfiles/ms/icons/blue-dot.png";
+    }
+    if (desc.includes("loading")) {
+      return "http://maps.google.com/mapfiles/ms/icons/yellow-dot.png";
+    }
     return "http://maps.google.com/mapfiles/ms/icons/green-dot.png";
   };
+
+  // Handle map idle (after panning or zooming)
+  const onIdle = useCallback(() => {
+    if (mapRef.current && onBoundsChange) {
+      const map = mapRef.current;
+      const bounds = map.getBounds();
+      if (bounds) {
+        const ne = bounds.getNorthEast();
+        const sw = bounds.getSouthWest();
+        onBoundsChange({
+          north: ne.lat(),
+          south: sw.lat(),
+          east: ne.lng(),
+          west: sw.lng()
+        });
+      }
+    }
+  }, [onBoundsChange]);
+
+  const onLoad = useCallback((map) => {
+    mapRef.current = map;
+  }, []);
 
   return (
     <div className="map-wrapper">
@@ -43,12 +74,14 @@ function Map({ signs }) {
         center={center}
         zoom={13}
         options={mapOptions}
+        onLoad={onLoad}
+        onIdle={onIdle}
       >
-        {signs.map((sign, index) => (
+        {signs.map((sign) => (
           <Marker
-            key={index}
+            key={sign.id}
             position={{ lat: sign.latitude, lng: sign.longitude }}
-            icon={getMarkerIcon(sign.sign_type)}
+            icon={getMarkerIcon(sign.sign_description)}
             onClick={() => setSelectedSign(sign)}
           />
         ))}
@@ -62,16 +95,20 @@ function Map({ signs }) {
               <h3 className="info-title">{selectedSign.sign_description}</h3>
               <div className="info-details">
                 <div className="info-row">
-                  <span className="info-label">Type:</span>
-                  <span className="info-value">{selectedSign.sign_type}</span>
-                </div>
-                <div className="info-row">
-                  <span className="info-label">Location:</span>
-                  <span className="info-value">{selectedSign.location_description}</span>
+                  <span className="info-label">Code:</span>
+                  <span className="info-value">{selectedSign.sign_code}</span>
                 </div>
                 <div className="info-row">
                   <span className="info-label">Order:</span>
-                  <span className="info-value">#{selectedSign.sign_order}</span>
+                  <span className="info-value">{selectedSign.order_number}</span>
+                </div>
+                <div className="info-row">
+                  <span className="info-label">Side:</span>
+                  <span className="info-value">{selectedSign.side_of_street}</span>
+                </div>
+                <div className="info-row">
+                  <span className="info-label">Type:</span>
+                  <span className="info-value">{selectedSign.order_type}</span>
                 </div>
               </div>
             </div>

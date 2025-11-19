@@ -3,6 +3,7 @@ import { useJsApiLoader } from "@react-google-maps/api";
 import Navbar from "./components/Navbar/Navbar";
 import Sidebar from "./components/Sidebar/Sidebar";
 import Map from "./components/Map/Map";
+import { getSignsInBounds } from "./api/supabaseClient";
 import "./App.css";
 
 function App() {
@@ -15,38 +16,57 @@ function App() {
   const [searchQuery, setSearchQuery] = useState("");
   const [filterType, setFilterType] = useState("all");
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [loading, setLoading] = useState(false);
 
+  // Function to load signs based on map bounds
+  const loadSignsInBounds = async (bounds) => {
+    setLoading(true);
+    try {
+      const data = await getSignsInBounds(bounds, 5000);
+      setSigns(data);
+    } catch (error) {
+      console.error("Error loading signs:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Load initial signs for NYC area
   useEffect(() => {
-    fetch("/data/parking_signs_sample.json")
-      .then((res) => res.json())
-      .then((data) => {
-        setSigns(data);
-        setFilteredSigns(data);
-      });
+    const nycBounds = {
+      north: 40.9176,
+      south: 40.4774,
+      east: -73.7004,
+      west: -74.2591
+    };
+    loadSignsInBounds(nycBounds);
   }, []);
 
   useEffect(() => {
     let filtered = signs;
 
-    // Filter by type
+    // Filter by type - updated to match Supabase sign_code field
     if (filterType !== "all") {
       filtered = filtered.filter((sign) => {
-        if (filterType === "no-parking") return sign.sign_type.includes("No Parking");
-        if (filterType === "metered") return sign.sign_type.includes("Metered");
-        if (filterType === "loading") return sign.sign_type.includes("Loading");
-        return !sign.sign_type.includes("No Parking") &&
-               !sign.sign_type.includes("Metered") &&
-               !sign.sign_type.includes("Loading");
+        const desc = sign.sign_description?.toLowerCase() || "";
+        if (filterType === "no-parking") return desc.includes("no parking");
+        if (filterType === "metered") return desc.includes("metered");
+        if (filterType === "loading") return desc.includes("loading");
+        return !desc.includes("no parking") &&
+               !desc.includes("metered") &&
+               !desc.includes("loading");
       });
     }
 
-    // Filter by search query
+    // Filter by search query - updated for Supabase fields
     if (searchQuery) {
-      filtered = filtered.filter((sign) =>
-        sign.location_description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        sign.sign_description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        sign.sign_type.toLowerCase().includes(searchQuery.toLowerCase())
-      );
+      filtered = filtered.filter((sign) => {
+        const desc = sign.sign_description?.toLowerCase() || "";
+        const code = sign.sign_code?.toLowerCase() || "";
+        const order = sign.order_number?.toLowerCase() || "";
+        const query = searchQuery.toLowerCase();
+        return desc.includes(query) || code.includes(query) || order.includes(query);
+      });
     }
 
     setFilteredSigns(filtered);
@@ -71,7 +91,11 @@ function App() {
           totalSigns={signs.length}
         />
 
-        <Map signs={filteredSigns} />
+        <Map
+          signs={filteredSigns}
+          onBoundsChange={loadSignsInBounds}
+          loading={loading}
+        />
       </div>
     </div>
   );
